@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <div class="mt-5">
+        <h3 class="p-3 text-center">Change Password Form</h3>
+        <form method="POST" class="px-5 pt-4">
+            {% csrf_token %}
+
+
+            <label>New Password</label><br>
+            <input type="password" name="password1" required>
+            <br><br>
+
+            <label>Confirm Password</label><br>
+            <input type="password" name="password2" required>
+
+            <br><br>
+
+            <button class="btn btn-danger">Change Password</button>
+        </form>
+        <br>
+    </div>
+
+{% endblock %}

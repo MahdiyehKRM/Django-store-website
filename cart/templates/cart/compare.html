@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+    <script>
+
+
+        function remove_compare(id) {
+            $.ajax({
+                url: "/cart/compare/remove/", type: 'get', data: {id: id}, success: function (data) {
+                    if (data.deleted) {
+                        $('#userTable #row' + id).remove();
+                    }
+                }
+            })
+        }
+
+    </script>
+    <!-- compare main wrapper start -->
+    <div class="breadcrumb-area" dir="rtl">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcrumb-wrap">
+                        <nav aria-label="breadcrumb">
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="{% url 'home:home' %}">خانه</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">مقایسه</li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="compare-page-wrapper" dir="rtl">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <!-- Compare Page Content Start -->
+                    <div class="compare-page-content-wrap">
+                        <div class="compare-table table-responsive">
+                            <table class="table table-bordered mb-0">
+                                <tbody id="userTable">
+                                <tr>
+                                    <td class="first-column">محصول</td>
+                                    {% for q in qs %}
+                                        <td class="product-image-title" id="row{{ q.id }}">
+                                            <a href="{% url 'home:details' q.id %}" class="image">
+                                                <img class="img-fluid" src="{{ q.product.image.url }}"
+                                                     alt="{{ q.product.name }}">
+                                            </a>
+                                        </td>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td class="first-column">توضیحات</td>
+                                    {% for q in qs %}
+                                        <td class="pro-desc" id="row{{ q.id }}">
+                                            <p>{{ q.product.information|safe }}</p>
+                                        </td>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td class="first-column">قیمت</td>
+                                    {% for q in qs %}
+                                        <td class="pro-price" id="row{{ q.id }}">
+                                            {{ q.product.total_price }}
+                                        </td>
+                                    {% endfor %}
+                                </tr>
+
+
+                                <tr>
+                                    <td class="first-column">حذف</td>
+                                    {% for q in qs %}
+                                        <td class="pro-remove" id="row{{ q.id }}">
+                                            <button onclick="remove_compare('{{ q.id }}')"
+                                                    class="btn remove-compare">delete
+
+                                            </button>
+                                        </td>
+                                    {% endfor %}
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- Compare Page Content End -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- compare main wrapper end -->
+{% endblock %}

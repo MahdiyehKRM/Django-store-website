@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <form  action="{% url 'order:order_create' %}" method="POST">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-6">
+                <div class="single-input-item">
+                    <label for="f_name" class="required">نام</label>
+                    <input type="text" {% if request.user.f_name %}
+                           value="{{ request.user.f_name }}" {% else %} value="" {% endif %}
+                           name="f_name"
+                           id="f_name" required/>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="single-input-item">
+                    <label for="l_name" class="required">نام خانوادگی</label>
+                    <input type="text" {% if request.user.l_name %}
+                           value="{{ request.user.l_name }}" {% else %} value="" {% endif %}
+                           name="l_name"
+                           id="l_name" required/>
+                </div>
+            </div>
+        </div>
+
+        <div class="single-input-item">
+            <label for="email" class="required">ایمیل</label>
+            <input type="email" name="email" id="email" value="{{ request.user.email }}"
+                   required/>
+        </div>
+
+        <div class="single-input-item">
+            <label for="street-address" class="required pt-20">آدرس</label>
+            <input type="text" name="address" id="street-address"
+                    {% if request.user.address %}
+                   value="{{ request.user.address }}" {% else %} value="" {% endif %}
+                   required/>
+        </div>
+
+
+        <div class="single-input-item text-center m-4">
+            <button class="btn btn-danger" type="submit" style="width:100%;padding:10px;">
+                ثبت سفارش
+            </button>
+        </div>
+    </form>
+{% endblock %}

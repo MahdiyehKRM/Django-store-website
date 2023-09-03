@@ -1,0 +1,95 @@
+<header class="header header-intro-clearance header-3">
+    <div class="header-middle">
+        <div class="container">
+            <div class="header-left">
+                <button class="mobile-menu-toggler">
+                    <span class="sr-only">Toggle mobile menu</span>
+                    <i class="icon-bars"></i>
+                </button>
+
+                <a href="index.html" class="logo">
+                    <img src="/static/assets/images/demos/demo-3/logo.png" alt="Molla Logo" width="105" height="25">
+                </a>
+            </div><!-- End .header-left -->
+
+            <div class="header-center">
+                <div class="header-search header-search-extended header-search-visible d-none d-lg-block">
+                    <a href="#" class="search-toggle" role="button"><i class="icon-search"></i></a>
+                    <form action="{% url 'home:products' %}" method="get">
+                        <div class="header-search-wrapper search-wrapper-wide">
+                            <label for="q" class="sr-only">Search</label>
+                            <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
+                            <input type="search" class="form-control" name="search" id="q" placeholder="Search product ..."
+                                   required>
+                        </div><!-- End .header-search-wrapper -->
+                    </form>
+                </div><!-- End .header-search -->
+            </div>
+
+            <div class="header-right">
+                <div class="dropdown compare-dropdown">
+                    <a href="{% url 'cart:compare' %}" class="dropdown-toggle"
+                       aria-label="Compare Products">
+                        <div class="icon">
+                            <i class="icon-random"></i>
+                        </div>
+                        <p>Compare</p>
+                    </a>
+                </div><!-- End .compare-dropdown -->
+
+
+            </div><!-- End .header-right -->
+        </div><!-- End .container -->
+    </div><!-- End .header-middle -->
+
+    <div class="header-bottom sticky-header">
+        <div class="container">
+            <div class="header-left">
+                <div class="dropdown category-dropdown">
+                    <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="false" data-display="static" title="Browse Categories">
+                        Browse Categories <i class="icon-angle-down"></i>
+                    </a>
+
+                    <div class="dropdown-menu">
+                        <nav class="side-nav">
+                            <ul class="menu-vertical sf-arrows">
+                                {% for cat in category %}
+                                    <li><a href="#">{{ cat.name }}</a></li>
+                                {% endfor %}
+                            </ul><!-- End .menu-vertical -->
+                        </nav><!-- End .side-nav -->
+                    </div><!-- End .dropdown-menu -->
+                </div><!-- End .category-dropdown -->
+            </div><!-- End .header-left -->
+
+            <div class="header-center">
+                <nav class="main-nav">
+                    <ul class="menu">
+                        <li>
+                            <a href="#" class="sf-with-ul">Home</a>
+                        </li>
+                        {% for cat in category %}
+                            <li>
+                                <a href="{% url 'home:category' cat.pk cat.slug %}" class="sf-with-ul">{{ cat.name }}</a>
+                                <ul>
+                                    {% for data in cat.sub.all %}
+                                        <li>
+                                            <a href="{% url 'home:category' data.pk data.slug %}" class="sf-with-ul">{{ data.name }}</a>
+
+                                            <ul>
+                                                {% for info in data.sub.all %}
+                                                    <li><a href="{% url 'home:category' info.pk info.slug %}">{{ info.name }}</a></li>
+                                                {% endfor %}
+                                            </ul>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        {% endfor %}
+                    </ul><!-- End .menu -->
+                </nav><!-- End .main-nav -->
+            </div><!-- End .header-center -->
+        </div><!-- End .container -->
+    </div><!-- End .header-bottom -->
+</header><!-- End .header -->

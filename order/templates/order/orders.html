@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block body %}
+ <div class="checkout-page-wrapper">
+            <div class="container" dir="rtl">
+                <div class="row">
+                    <div class="col-12">
+                        <!-- Checkout Login Coupon Accordion Start -->
+                        <div class="checkoutaccordion" id="checkOutAccordion">
+                            <div class="card">
+                                <h3>کد تخفیف داری؟ <span data-toggle="collapse" data-target="#couponaccordion">پس اینجا کلیک کن</span>
+                                </h3>
+                                <div id="couponaccordion" class="collapse" data-parent="#checkOutAccordion">
+                                    <div class="card-body">
+                                        <div class="cart-update-option">
+                                            <div class="apply-coupon-wrapper">
+                                                <form  action="{% url 'order:coupon' order.pk %}"
+                                                      method="post">
+                                                    {% csrf_token %}
+                                                    {{ form }}
+                                                    <button class="btn btn-danger mr-2">اعمال تخفیف</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Checkout Login Coupon Accordion End -->
+                    </div>
+                </div>
+                <div class="row">
+                    <!-- Checkout Billing Details -->
+                    <div class="col-lg-6">
+                        <div class="order-summary-details mt-md-26 mt-sm-26">
+                            <h2>خلاصه صورتحساب</h2>
+                            <div class="order-summary-content mb-sm-4">
+                                <!-- Order Summary Table -->
+                                <div class="order-summary-table table-responsive text-center">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>محصولات</th>
+                                            <th>مبلغ</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for product in products %}
+                                            <tr>
+                                                <td><a href="">{{ product.product.name }} <strong> ×
+                                                    {{ product.quantity }}</strong></a>
+                                                </td>
+                                                <td>{{ product.price }}تومان</td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                        <tfoot>
+                                        <tr>
+                                            <td>هزینه نهایی</td>
+                                            <td >{{order.get_price}}تومان</td>
+                                        </tr>
+
+                                        </tfoot>
+                                    </table>
+                                </div>
+                                <!-- Order Payment Method -->
+                             <a href="{% url 'order:request' order.id  %}">پرداخت</a>
+                            </div>
+                        </div>
+                        <!-- Order Summary Details -->
+                    </div>
+                </div>
+            </div>
+            <!-- checkout main wrapper end -->
+        </div>
+{% endblock %}

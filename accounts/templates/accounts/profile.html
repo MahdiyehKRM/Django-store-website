@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block body %}
+    <div class="container m-5">
+        <h1>history</h1><br>
+        <table class="table table-bordered" dir="rtl">
+            <thead class="thead-light">
+            <tr>
+                <th>محصولات</th>
+                <th>تاریخ</th>
+                <th>وضعیت</th>
+                <th>مبلغ کل</th>
+                <th>کد رهگیری</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for order in orders %}
+                <tr>
+                    <td>
+                        {% for i in order.order_item.all %}
+                            {{ i.variant.name }}-<br>
+                        {% endfor %}
+                    </td>
+
+                    <td>{{ order.create }}</td>
+                    <td> {% if order.paid == False %}
+                        پرداخت نشد
+                    {% else %}
+                        پرداخت انجام شد
+                    {% endif %}
+                    </td>
+                    <td>مبلغ کل:{{ order.get_price }}
+                    </td>
+                    <td><a rel="nofollow" href=""
+                           class="check-btn sqr-btn ">{{ order.code }}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <hr>
+        <hr>
+        <h2>Wishlist</h2>
+        <table class="table table-bordered" dir="rtl">
+            <thead class="thead-light" style="text-align: right;">
+            <tr>
+                <th>محصول</th>
+                <th>قیمت</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for product in data.products.all %}
+                <tr>
+                    <td><a href="{% url 'home:details' product.id %}"><img
+                            src="{{ product.image.url }}"
+                            style="height: 200px;"
+                            alt="{{ product.name }}"></a></td>
+                    <td>{{ product.total_price}}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <hr>
+    <button class="btn btn-success">
+        <a href="{% url 'accounts:update' users.pk %}">update</a>
+    </button>
+    <button class="btn btn-info">
+        <a href="{% url 'accounts:change' users.pk %}">password</a>
+    </button>
+
+
+    </div>
+{% endblock %}

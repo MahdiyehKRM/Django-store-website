@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% block body %}
+    <div class="container">
+        <div class="container m-5" dir="rtl">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcrumb-wrap">
+                        <nav aria-label="breadcrumb">
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="{% url 'home:home' %}">خانه</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">ثبت نام</li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div><!-- End .container -->
+        <div class="login-register-wrapper" dir="rtl">
+            <div class="container">
+                <div class="member-area-from-wrap">
+                    <div class="row">
+                        <!-- Login Content Start -->
+                        <div class="col-lg-12">
+                            <div class="login-reg-form-wrap  pr-lg-50 mb-5">
+                                <form action="{% url 'accounts:register' %}" method="post" class="register">
+                                    {% csrf_token %}
+                                    {% if form.errors %}
+                                        {% for field in form %}
+                                            {% for error in field.errors %}
+                                                <div class="alert alert-danger">
+                                                    <strong>{{ error|escape }}</strong>
+                                                </div>
+                                            {% endfor %}
+                                        {% endfor %}
+                                    {% endif %}
+                                    <div class="row">
+                                        <div class="col-6 single-input-item">
+                                            <input type="email" id="email" name="email" required class="form-control"
+                                                   placeholder="ایمیل">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6 single-input-item">
+                                            <input type="number" id="phone" name="phone" required class="form-control"
+                                                   placeholder="موبایل">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6 single-input-item">
+                                            <input type="text" id="f_name" name="f_name" required class="form-control"
+                                                   placeholder="نام">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6 single-input-item">
+                                            <input type="text" id="l_name" name="l_name" required class="form-control"
+                                                   placeholder="نام خانوادگی">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6 single-input-item">
+                                            <input type="password" id="psw" name="password_1"
+                                                   class="form-control" required placeholder="پسورد">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6 single-input-item">
+                                            <button class="btn btn-danger btn-block" type="submit">ثبت نام
+                                            </button>
+                                        </div>
+
+                                    </div>
+                                </form>
+                                <div class="row">
+                                    <div class="col-6 single-input-item">
+                                        <a href="{% url 'accounts:login' %}">
+                                            <button class="btn btn-success btn-block">قبلا ثبت نام کرده ام</button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <div class="wrapper box-layout">
+    <div class="container">
+            <!-- breadcrumb area start -->
+            <div class="breadcrumb-wrap" dir="rtl">
+                <nav aria-label="breadcrumb">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'home:home' %}">خانه</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">پرداخت</li>
+                    </ul>
+                </nav>
+            </div>
+            <!-- breadcrumb area end -->
+        </div>
+        <div class="container mt-5">
+            <div class="text-center">
+                <div class="success mb-5">
+                    <i class="checkmark">❌</i>
+                </div>
+                <h3 class="mb-5">پرداخت ناموفق بود</h3><br>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

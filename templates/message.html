@@ -1,0 +1,8 @@
+<div id="del_msg" dir="ltr">
+    {% if messages %}
+        {% for msg in messages %}
+            <h3 {% if msg.tags %} class="alert alert-{{ msg.tags }}" {% endif %}> {{ msg }}</h3>
+        {% endfor %}
+    {% endif %}
+</div>
+

@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-8">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">product</th>
+                        <th scope="col">quantity</th>
+                        <th scope="col">price</th>
+                        <th scope="col">remove</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for c in cart %}
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>{{ c.variant.name }}</td>
+                            <td>
+                                <i class="fa fa-angle-up" onclick="add('{{ c.variant.id }}')"></i>
+                                <input type="number" min="1" id="number{{ c.variant.id }}" value="{{ c.quantity }}" max="{{ c.variant.amount }}">
+                                <i class="fa fa-angle-down" onclick="remove('{{ c.variant.id }}')"></i>
+                            </td>
+                            <td>{{ c.variant.unit_price }}</td>
+                            <td><a href="{% url 'cart:remove' c.variant.id %}">remove</a></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <a href="{% url 'order:information' %}">order pay</a>
+            </div>
+            <div class="col-4">
+                <ul>
+                    <li>price: <span id="price"></span></li>
+                    <li>quantity: <span id="quantity"></span></li>
+                    <li>discount: <span id="discount"></span></li>
+                    <li>Total: <span id="total"></span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function show(){
+            $.ajax({
+                url: "{% url 'cart:show' %}",
+                type : 'GET',
+                success:function(response){
+                    $("#price").html(response.price);
+                    $("#quantity").html(response.quantity);
+                    $("#discount").html(response.discount);
+                    $("#total").html(response.total);
+                }
+            })
+        }
+
+        show();
+
+        function add(id){
+            const num = $("#number" + id).val();
+            const num2 = $("#number" + id).attr('max');
+            quantity = 0;
+            quantity += parseInt(num) + 1;
+            if(quantity <= num2){
+                 $("#number" + id).val(quantity);
+                 $.ajax({
+                     url : "{% url 'cart:add-single' %}",
+                     type:'GET',
+                     data:{variant_id:id,quantity:quantity},
+                     success:function(data){
+                        show();
+                     }
+                 })
+            }
+        }
+        function remove(id){
+            const num = $("#number" + id).val();
+            const num2 = $("#number" + id).attr('min');
+            quantity = 0;
+            quantity += parseInt(num) - 1;
+            if(quantity >= num2){
+                 $("#number" + id).val(quantity);
+                 $.ajax({
+                     url : "{% url 'cart:remove-single' %}",
+                     type:'GET',
+                     data:{variant_id:id,quantity:quantity},
+                     success:function(data){
+                        show();
+                     }
+                 })
+            }
+        }
+
+    </script>
+
+
+{% endblock %}
